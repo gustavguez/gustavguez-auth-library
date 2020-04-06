@@ -7,7 +7,8 @@
     "build": "ng build",
     "test": "ng test",
     "lint": "ng lint",
-    "e2e": "ng e2e"
+	"e2e": "ng e2e",
+	"eslint": "eslint 'projects/ngx-gustavguez-auth/src/**/*.ts'"
   },
   "private": true,
   "dependencies": {
@@ -30,10 +31,15 @@
     "@angular/cli": "~9.0.6",
     "@angular/compiler-cli": "~9.0.6",
     "@angular/language-service": "~9.0.6",
-    "@types/node": "^12.11.1",
     "@types/jasmine": "~3.5.0",
     "@types/jasminewd2": "~2.0.3",
+    "@types/node": "^12.11.1",
+    "@typescript-eslint/eslint-plugin": "^2.27.0",
+    "@typescript-eslint/eslint-plugin-tslint": "^2.27.0",
+    "@typescript-eslint/parser": "^2.27.0",
     "codelyzer": "^5.1.2",
+    "eslint": "^6.8.0",
+    "gustavguez-eslint-config": "^1.0.6",
     "jasmine-core": "~3.5.0",
     "jasmine-spec-reporter": "~4.2.1",
     "karma": "~4.3.0",

@@ -1,4 +1,4 @@
-export class NgxGustavguezAuthConfigModel {
+export class NgxGustavguezConfigModel {
 
 	constructor(
 		public grantType?: string,

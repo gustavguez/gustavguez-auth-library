@@ -1,4 +1,4 @@
-export class NgxGustavguezAuthAccessTokenModel {
+export class NgxGustavguezAccessTokenModel {
 
 	constructor(
 		public token: string,

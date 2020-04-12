@@ -4,10 +4,10 @@ import { ApiService, ApiResponseModel } from 'ngx-gustavguez-core';
 import { Observable } from 'rxjs';
 import { map } from 'rxjs/operators';
 
-import { NgxGustavguezAuthConfigModel } from './ngx-gustavguez-auth-config.model';
-import { NgxGustavguezAuthAccessTokenModel } from './ngx-gustavguez-auth-access-token.model';
-import { NgxGustavguezAuthLastMeModel } from './ngx-gustavguez-auth-last-me.model';
-import { NgxGustavguezAuthMeModel } from './ngx-gustavguez-auth-me.model';
+import { NgxGustavguezConfigModel } from './ngx-gustavguez-config.model';
+import { NgxGustavguezAccessTokenModel } from './ngx-gustavguez-access-token.model';
+import { NgxGustavguezLastMeModel } from './ngx-gustavguez-last-me.model';
+import { NgxGustavguezMeModel } from './ngx-gustavguez-me.model';
 import { HttpErrorResponse } from '@angular/common/http';
 
 @Injectable({
@@ -16,15 +16,15 @@ import { HttpErrorResponse } from '@angular/common/http';
 export class NgxGustavguezAuthService {
 
 	// Models
-	private me: NgxGustavguezAuthMeModel;
-	private config: NgxGustavguezAuthConfigModel;
-	private lastMe: NgxGustavguezAuthLastMeModel;
-	private accessToken: NgxGustavguezAuthAccessTokenModel;
+	private me: NgxGustavguezMeModel;
+	private config: NgxGustavguezConfigModel;
+	private lastMe: NgxGustavguezLastMeModel;
+	private accessToken: NgxGustavguezAccessTokenModel;
 
 	// User session events emitters
 	private onSessionStateChange: EventEmitter<boolean>;
 	private onMeParsed: EventEmitter<any>;
-	private onMeChanged: EventEmitter<NgxGustavguezAuthMeModel>;
+	private onMeChanged: EventEmitter<NgxGustavguezMeModel>;
 
 	// Service constructure
 	constructor(
@@ -32,27 +32,27 @@ export class NgxGustavguezAuthService {
 		private apiService: ApiService) {
 		// Create event emitters
 		this.onSessionStateChange = new EventEmitter<boolean>();
-		this.onMeChanged = new EventEmitter<NgxGustavguezAuthMeModel>();
+		this.onMeChanged = new EventEmitter<NgxGustavguezMeModel>();
 		this.onMeParsed = new EventEmitter<any>();
 
 		// Default values
-		this.config = new NgxGustavguezAuthConfigModel();
+		this.config = new NgxGustavguezConfigModel();
 	}
 
 	// Methods
-	public setConfig(config: NgxGustavguezAuthConfigModel): void {
+	public setConfig(config: NgxGustavguezConfigModel): void {
 		this.config = config;
 	}
 
-	public getLastMe(): NgxGustavguezAuthLastMeModel {
+	public getLastMe(): NgxGustavguezLastMeModel {
 		return this.lastMe;
 	}
 
-	public getAccessToken(): NgxGustavguezAuthAccessTokenModel {
+	public getAccessToken(): NgxGustavguezAccessTokenModel {
 		return this.accessToken;
 	}
 
-	public getMe(): NgxGustavguezAuthMeModel {
+	public getMe(): NgxGustavguezMeModel {
 		return this.me;
 	}
 
@@ -64,7 +64,7 @@ export class NgxGustavguezAuthService {
 		return this.onSessionStateChange;
 	}
 
-	public getOnMeChanged(): Observable<NgxGustavguezAuthMeModel> {
+	public getOnMeChanged(): Observable<NgxGustavguezMeModel> {
 		return this.onMeChanged;
 	}
 
@@ -93,7 +93,7 @@ export class NgxGustavguezAuthService {
 					// Creates the access token model
 					return this.parseAccessToken(response);
 				})
-			).subscribe((response: NgxGustavguezAuthAccessTokenModel) => {
+			).subscribe((response: NgxGustavguezAccessTokenModel) => {
 				// Load accesstoken
 				this.accessToken = response;
 
@@ -131,11 +131,11 @@ export class NgxGustavguezAuthService {
 	}
 
 	// Generate a access token
-	public requestMe(): Observable<NgxGustavguezAuthMeModel> {
+	public requestMe(): Observable<NgxGustavguezMeModel> {
 		return this.apiService.fetchData(this.config.oauthMeUri).pipe(
 			map((response: ApiResponseModel) => {
 				// Load userLogged
-				this.me = new NgxGustavguezAuthMeModel();
+				this.me = new NgxGustavguezMeModel();
 				this.me.fromJSON(response.data.me);
 
 				// Emit parsed and changed
@@ -143,7 +143,7 @@ export class NgxGustavguezAuthService {
 				this.onMeChanged.emit(this.me);
 
 				// Load user logged
-				this.lastMe = new NgxGustavguezAuthLastMeModel();
+				this.lastMe = new NgxGustavguezLastMeModel();
 				this.lastMe.avatar = this.me.profileImage;
 				this.lastMe.username = this.me.username;
 
@@ -155,9 +155,9 @@ export class NgxGustavguezAuthService {
 		);
 	}
 
-	public refreshToken(): Observable<NgxGustavguezAuthAccessTokenModel> {
+	public refreshToken(): Observable<NgxGustavguezAccessTokenModel> {
 		// Get refresh token
-		const refreshToken: string = this.accessToken instanceof NgxGustavguezAuthAccessTokenModel ? this.accessToken.refreshToken : '';
+		const refreshToken: string = this.accessToken instanceof NgxGustavguezAccessTokenModel ? this.accessToken.refreshToken : '';
 
 		// Request token
 		return this.apiService.createObj(this.config.oauthUri, {
@@ -199,7 +199,7 @@ export class NgxGustavguezAuthService {
 
 			// Load last user
 			if (lastMeUsername || lastMeUsername) {
-				this.lastMe = new NgxGustavguezAuthLastMeModel(
+				this.lastMe = new NgxGustavguezLastMeModel(
 					lastMeUsername,
 					lastMeAvatar
 				);
@@ -213,7 +213,7 @@ export class NgxGustavguezAuthService {
 				this.accessToken = this.parseAccessToken(accessTokenLs);
 
 				// Check token
-				if (this.accessToken instanceof NgxGustavguezAuthAccessTokenModel) {
+				if (this.accessToken instanceof NgxGustavguezAccessTokenModel) {
 					// Has configured me
 					if (this.config.oauthMeUri) {
 						// Request me info
@@ -259,7 +259,7 @@ export class NgxGustavguezAuthService {
 	}
 
 	public checkAndNotifyMeState(): void {
-		if (this.me instanceof NgxGustavguezAuthMeModel && this.accessToken instanceof NgxGustavguezAuthAccessTokenModel) {
+		if (this.me instanceof NgxGustavguezMeModel && this.accessToken instanceof NgxGustavguezAccessTokenModel) {
 			// Emit login event
 			this.onSessionStateChange.emit(true);
 		} else {
@@ -268,7 +268,7 @@ export class NgxGustavguezAuthService {
 		}
 	}
 
-	public updateMe(me: NgxGustavguezAuthMeModel): void {
+	public updateMe(me: NgxGustavguezMeModel): void {
 		this.me = me;
 
 		// Emit change
@@ -276,8 +276,8 @@ export class NgxGustavguezAuthService {
 	}
 
 	// Private methods
-	private parseAccessToken(json: any): NgxGustavguezAuthAccessTokenModel {
-		let accessToken: NgxGustavguezAuthAccessTokenModel = null;
+	private parseAccessToken(json: any): NgxGustavguezAccessTokenModel {
+		let accessToken: NgxGustavguezAccessTokenModel = null;
 
 		// Check access token
 		if (json && json.access_token) {
@@ -287,7 +287,7 @@ export class NgxGustavguezAuthService {
 			expiration.setMinutes(expiration.getMinutes() + expiresIn);
 
 			// Creates the access token model
-			accessToken = new NgxGustavguezAuthAccessTokenModel(
+			accessToken = new NgxGustavguezAccessTokenModel(
 				json.access_token,
 				json.refresh_token,
 				expiration

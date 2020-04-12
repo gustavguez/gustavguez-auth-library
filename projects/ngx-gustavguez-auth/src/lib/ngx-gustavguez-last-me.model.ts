@@ -1,4 +1,4 @@
-export class NgxGustavguezAuthLastMeModel {
+export class NgxGustavguezLastMeModel {
 
 	constructor(
 		public username?: string,

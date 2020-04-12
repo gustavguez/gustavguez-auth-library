@@ -10,7 +10,7 @@ import { Observable, BehaviorSubject, throwError } from 'rxjs';
 import { catchError, filter, take, switchMap, finalize } from 'rxjs/operators';
 
 import { NgxGustavguezAuthService } from './ngx-gustavguez-auth.service';
-import { NgxGustavguezAuthAccessTokenModel } from './ngx-gustavguez-auth-access-token.model';
+import { NgxGustavguezAccessTokenModel } from './ngx-gustavguez-access-token.model';
 
 @Injectable()
 export class NgxGustavguezAuthInterceptor implements HttpInterceptor {
@@ -85,8 +85,8 @@ export class NgxGustavguezAuthInterceptor implements HttpInterceptor {
 
 			return this.ngxGustavguezAuthService.refreshToken()
 				.pipe(
-					switchMap((newToken: NgxGustavguezAuthAccessTokenModel) => {
-						if (newToken instanceof NgxGustavguezAuthAccessTokenModel) {
+					switchMap((newToken: NgxGustavguezAccessTokenModel) => {
+						if (newToken instanceof NgxGustavguezAccessTokenModel) {
 							this.tokenSubject.next(newToken.token);
 							return next.handle(this.addToken(req, newToken.token));
 						}

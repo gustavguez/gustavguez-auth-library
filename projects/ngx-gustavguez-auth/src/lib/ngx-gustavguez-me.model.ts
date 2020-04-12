@@ -1,4 +1,4 @@
-export class NgxGustavguezAuthMeModel {
+export class NgxGustavguezMeModel {
 
 	constructor(
 		public id?: number,

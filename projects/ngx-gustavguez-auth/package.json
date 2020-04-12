@@ -7,6 +7,7 @@
     "tslib": "^1.10.0"
   },
   "dependencies": {
-    "ngx-gustavguez-core": "^1.0.32"
+	"ngx-gustavguez-core": "^1.0.32",
+	"angular-2-local-storage": "^3.0.2"
   }
 }

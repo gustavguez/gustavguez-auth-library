@@ -5,5 +5,8 @@ module.exports = {
     parserOptions: {
         project: "tsconfig.json",
     },
-    rules: {}
+    rules: {
+		"@typescript-eslint/no-magic-numbers": "off",
+		"complexity": ["error", 6]
+	}
 }

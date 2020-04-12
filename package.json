@@ -7,8 +7,8 @@
     "build": "ng build",
     "test": "ng test",
     "lint": "ng lint",
-	"e2e": "ng e2e",
-	"eslint": "eslint 'projects/ngx-gustavguez-auth/src/**/*.ts'"
+    "e2e": "ng e2e",
+    "eslint": "eslint 'projects/ngx-gustavguez-auth/src/**/*.ts'"
   },
   "private": true,
   "dependencies": {
@@ -20,6 +20,7 @@
     "@angular/platform-browser": "~9.0.6",
     "@angular/platform-browser-dynamic": "~9.0.6",
     "@angular/router": "~9.0.6",
+    "angular-2-local-storage": "^3.0.2",
     "ngx-gustavguez-core": "^1.0.32",
     "rxjs": "~6.5.4",
     "tslib": "^1.10.0",

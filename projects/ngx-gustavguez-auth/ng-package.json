@@ -3,5 +3,9 @@
   "dest": "../../dist/ngx-gustavguez-auth",
   "lib": {
     "entryFile": "src/public-api.ts"
-  }
+  },
+  "whitelistedNonPeerDependencies": [
+	"ngx-gustavguez-core",
+	"angular-2-local-storage"
+  ]
 }

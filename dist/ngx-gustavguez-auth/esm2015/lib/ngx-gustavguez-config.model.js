@@ -1,0 +1,15 @@
+export class NgxGustavguezConfigModel {
+    constructor(grantType, grantTypeRefresh, clientId, clientSecret, accessTokenLsKey, lastMeAvatarLsKey, lastMeUsernameLsKey, oauthUri, oauthRefreshUri, oauthMeUri) {
+        this.grantType = grantType;
+        this.grantTypeRefresh = grantTypeRefresh;
+        this.clientId = clientId;
+        this.clientSecret = clientSecret;
+        this.accessTokenLsKey = accessTokenLsKey;
+        this.lastMeAvatarLsKey = lastMeAvatarLsKey;
+        this.lastMeUsernameLsKey = lastMeUsernameLsKey;
+        this.oauthUri = oauthUri;
+        this.oauthRefreshUri = oauthRefreshUri;
+        this.oauthMeUri = oauthMeUri;
+    }
+}
+//# sourceMappingURL=data:application/json;base64,eyJ2ZXJzaW9uIjozLCJmaWxlIjoibmd4LWd1c3Rhdmd1ZXotY29uZmlnLm1vZGVsLmpzIiwic291cmNlUm9vdCI6Im5nOi8vbmd4LWd1c3Rhdmd1ZXotYXV0aC8iLCJzb3VyY2VzIjpbImxpYi9uZ3gtZ3VzdGF2Z3Vlei1jb25maWcubW9kZWwudHMiXSwibmFtZXMiOltdLCJtYXBwaW5ncyI6IkFBQUEsTUFBTSxPQUFPLHdCQUF3QjtJQUVwQyxZQUNRLFNBQWtCLEVBQ2xCLGdCQUF5QixFQUN6QixRQUFpQixFQUNqQixZQUFxQixFQUNyQixnQkFBeUIsRUFDekIsaUJBQTBCLEVBQzFCLG1CQUE0QixFQUM1QixRQUFpQixFQUNqQixlQUF3QixFQUN4QixVQUFtQjtRQVRuQixjQUFTLEdBQVQsU0FBUyxDQUFTO1FBQ2xCLHFCQUFnQixHQUFoQixnQkFBZ0IsQ0FBUztRQUN6QixhQUFRLEdBQVIsUUFBUSxDQUFTO1FBQ2pCLGlCQUFZLEdBQVosWUFBWSxDQUFTO1FBQ3JCLHFCQUFnQixHQUFoQixnQkFBZ0IsQ0FBUztRQUN6QixzQkFBaUIsR0FBakIsaUJBQWlCLENBQVM7UUFDMUIsd0JBQW1CLEdBQW5CLG1CQUFtQixDQUFTO1FBQzVCLGFBQVEsR0FBUixRQUFRLENBQVM7UUFDakIsb0JBQWUsR0FBZixlQUFlLENBQVM7UUFDeEIsZUFBVSxHQUFWLFVBQVUsQ0FBUztJQUN2QixDQUFDO0NBQ0wiLCJzb3VyY2VzQ29udGVudCI6WyJleHBvcnQgY2xhc3MgTmd4R3VzdGF2Z3VlekNvbmZpZ01vZGVsIHtcblxuXHRjb25zdHJ1Y3Rvcihcblx0XHRwdWJsaWMgZ3JhbnRUeXBlPzogc3RyaW5nLFxuXHRcdHB1YmxpYyBncmFudFR5cGVSZWZyZXNoPzogc3RyaW5nLFxuXHRcdHB1YmxpYyBjbGllbnRJZD86IHN0cmluZyxcblx0XHRwdWJsaWMgY2xpZW50U2VjcmV0Pzogc3RyaW5nLFxuXHRcdHB1YmxpYyBhY2Nlc3NUb2tlbkxzS2V5Pzogc3RyaW5nLFxuXHRcdHB1YmxpYyBsYXN0TWVBdmF0YXJMc0tleT86IHN0cmluZyxcblx0XHRwdWJsaWMgbGFzdE1lVXNlcm5hbWVMc0tleT86IHN0cmluZyxcblx0XHRwdWJsaWMgb2F1dGhVcmk/OiBzdHJpbmcsXG5cdFx0cHVibGljIG9hdXRoUmVmcmVzaFVyaT86IHN0cmluZyxcblx0XHRwdWJsaWMgb2F1dGhNZVVyaT86IHN0cmluZ1xuXHQpIHsgfVxufVxuIl19

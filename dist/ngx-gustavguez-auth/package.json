@@ -1,0 +1,23 @@
+{
+  "name": "ngx-gustavguez-auth",
+  "version": "1.0.0",
+  "peerDependencies": {
+    "@angular/common": "^9.0.7",
+    "@angular/core": "^9.0.7",
+    "tslib": "^1.10.0"
+  },
+  "dependencies": {
+    "ngx-gustavguez-core": "^1.0.32",
+    "angular-2-local-storage": "^3.0.2"
+  },
+  "main": "bundles/ngx-gustavguez-auth.umd.js",
+  "module": "fesm5/ngx-gustavguez-auth.js",
+  "es2015": "fesm2015/ngx-gustavguez-auth.js",
+  "esm5": "esm5/ngx-gustavguez-auth.js",
+  "esm2015": "esm2015/ngx-gustavguez-auth.js",
+  "fesm5": "fesm5/ngx-gustavguez-auth.js",
+  "fesm2015": "fesm2015/ngx-gustavguez-auth.js",
+  "typings": "ngx-gustavguez-auth.d.ts",
+  "metadata": "ngx-gustavguez-auth.metadata.json",
+  "sideEffects": false
+}

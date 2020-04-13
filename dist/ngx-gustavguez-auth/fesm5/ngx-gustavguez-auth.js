@@ -104,6 +104,8 @@ var NgxGustavguezAuthService = /** @class */ (function () {
         var _this = this;
         // Create an observable
         var obs = new Observable(function (observer) {
+            // Set root strategy
+            _this.apiService.changeApiResponseStrategy('root');
             // Request token
             _this.apiService.createObj(_this.config.oauthUri, {
                 username: loginUsername,
@@ -117,7 +119,7 @@ var NgxGustavguezAuthService = /** @class */ (function () {
                     _this.storageService.set(_this.config.accessTokenLsKey, response.data);
                 }
                 // Creates the access token model
-                return _this.parseAccessToken(response);
+                return _this.parseAccessToken(response.data);
             })).subscribe(function (response) {
                 // Load accesstoken
                 _this.accessToken = response;
@@ -129,6 +131,8 @@ var NgxGustavguezAuthService = /** @class */ (function () {
                     _this.requestMe().subscribe(function () {
                         // Notify user state
                         _this.checkAndNotifyMeState();
+                        // Restore
+                        _this.apiService.restoreApiResponseStrategy();
                         // Load response
                         observer.next(true);
                         observer.complete();
@@ -138,6 +142,8 @@ var NgxGustavguezAuthService = /** @class */ (function () {
                     });
                 }
                 else {
+                    // Restore
+                    _this.apiService.restoreApiResponseStrategy();
                     // Complete subscribe
                     observer.next(true);
                     observer.complete();
@@ -152,6 +158,9 @@ var NgxGustavguezAuthService = /** @class */ (function () {
     // Generate a access token
     NgxGustavguezAuthService.prototype.requestMe = function () {
         var _this = this;
+        // Set root strategy
+        this.apiService.changeApiResponseStrategy('data');
+        // Do request
         return this.apiService.fetchData(this.config.oauthMeUri).pipe(map(function (response) {
             // Load userLogged
             _this.me = new NgxGustavguezMeModel();
@@ -166,6 +175,8 @@ var NgxGustavguezAuthService = /** @class */ (function () {
             // Save to LS
             _this.storageService.set(_this.config.lastMeAvatarLsKey, _this.me.profileImage);
             _this.storageService.set(_this.config.lastMeUsernameLsKey, _this.me.username);
+            // Restore
+            _this.apiService.restoreApiResponseStrategy();
             return _this.me;
         }));
     };
@@ -173,6 +184,8 @@ var NgxGustavguezAuthService = /** @class */ (function () {
         var _this = this;
         // Get refresh token
         var refreshToken = this.accessToken instanceof NgxGustavguezAccessTokenModel ? this.accessToken.refreshToken : '';
+        // Set root strategy
+        this.apiService.changeApiResponseStrategy('root');
         // Request token
         return this.apiService.createObj(this.config.oauthUri, {
             refresh_token: refreshToken,
@@ -187,9 +200,11 @@ var NgxGustavguezAuthService = /** @class */ (function () {
                 _this.storageService.set(_this.config.accessTokenLsKey, response.data);
             }
             // Creates the access token model
-            _this.accessToken = _this.parseAccessToken(response);
+            _this.accessToken = _this.parseAccessToken(response.data);
             // Load to apiService to
             _this.apiService.setAccessToken(_this.accessToken.token);
+            // Restore
+            _this.apiService.restoreApiResponseStrategy();
             return _this.accessToken;
         }));
     };
@@ -219,6 +234,8 @@ var NgxGustavguezAuthService = /** @class */ (function () {
                 if (_this.accessToken instanceof NgxGustavguezAccessTokenModel) {
                     // Has configured me
                     if (_this.config.oauthMeUri) {
+                        // Load to apiService to
+                        _this.apiService.setAccessToken(_this.accessToken.token);
                         // Request me info
                         _this.requestMe().subscribe(function () {
                             // Notify user state

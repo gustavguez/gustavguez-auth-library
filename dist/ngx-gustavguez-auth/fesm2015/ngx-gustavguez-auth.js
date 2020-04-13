@@ -99,6 +99,8 @@ let NgxGustavguezAuthService = class NgxGustavguezAuthService {
     login(loginUsername, loginPassword) {
         // Create an observable
         const obs = new Observable((observer) => {
+            // Set root strategy
+            this.apiService.changeApiResponseStrategy('root');
             // Request token
             this.apiService.createObj(this.config.oauthUri, {
                 username: loginUsername,
@@ -112,7 +114,7 @@ let NgxGustavguezAuthService = class NgxGustavguezAuthService {
                     this.storageService.set(this.config.accessTokenLsKey, response.data);
                 }
                 // Creates the access token model
-                return this.parseAccessToken(response);
+                return this.parseAccessToken(response.data);
             })).subscribe((response) => {
                 // Load accesstoken
                 this.accessToken = response;
@@ -124,6 +126,8 @@ let NgxGustavguezAuthService = class NgxGustavguezAuthService {
                     this.requestMe().subscribe(() => {
                         // Notify user state
                         this.checkAndNotifyMeState();
+                        // Restore
+                        this.apiService.restoreApiResponseStrategy();
                         // Load response
                         observer.next(true);
                         observer.complete();
@@ -133,6 +137,8 @@ let NgxGustavguezAuthService = class NgxGustavguezAuthService {
                     });
                 }
                 else {
+                    // Restore
+                    this.apiService.restoreApiResponseStrategy();
                     // Complete subscribe
                     observer.next(true);
                     observer.complete();
@@ -146,6 +152,9 @@ let NgxGustavguezAuthService = class NgxGustavguezAuthService {
     }
     // Generate a access token
     requestMe() {
+        // Set root strategy
+        this.apiService.changeApiResponseStrategy('data');
+        // Do request
         return this.apiService.fetchData(this.config.oauthMeUri).pipe(map((response) => {
             // Load userLogged
             this.me = new NgxGustavguezMeModel();
@@ -160,12 +169,16 @@ let NgxGustavguezAuthService = class NgxGustavguezAuthService {
             // Save to LS
             this.storageService.set(this.config.lastMeAvatarLsKey, this.me.profileImage);
             this.storageService.set(this.config.lastMeUsernameLsKey, this.me.username);
+            // Restore
+            this.apiService.restoreApiResponseStrategy();
             return this.me;
         }));
     }
     refreshToken() {
         // Get refresh token
         const refreshToken = this.accessToken instanceof NgxGustavguezAccessTokenModel ? this.accessToken.refreshToken : '';
+        // Set root strategy
+        this.apiService.changeApiResponseStrategy('root');
         // Request token
         return this.apiService.createObj(this.config.oauthUri, {
             refresh_token: refreshToken,
@@ -180,9 +193,11 @@ let NgxGustavguezAuthService = class NgxGustavguezAuthService {
                 this.storageService.set(this.config.accessTokenLsKey, response.data);
             }
             // Creates the access token model
-            this.accessToken = this.parseAccessToken(response);
+            this.accessToken = this.parseAccessToken(response.data);
             // Load to apiService to
             this.apiService.setAccessToken(this.accessToken.token);
+            // Restore
+            this.apiService.restoreApiResponseStrategy();
             return this.accessToken;
         }));
     }
@@ -211,6 +226,8 @@ let NgxGustavguezAuthService = class NgxGustavguezAuthService {
                 if (this.accessToken instanceof NgxGustavguezAccessTokenModel) {
                     // Has configured me
                     if (this.config.oauthMeUri) {
+                        // Load to apiService to
+                        this.apiService.setAccessToken(this.accessToken.token);
                         // Request me info
                         this.requestMe().subscribe(() => {
                             // Notify user state

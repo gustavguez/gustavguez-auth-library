@@ -21,7 +21,7 @@
     "@angular/platform-browser-dynamic": "~9.0.6",
     "@angular/router": "~9.0.6",
     "angular-2-local-storage": "^3.0.2",
-    "ngx-gustavguez-core": "^1.0.32",
+    "ngx-gustavguez-core": "^1.1.2",
     "rxjs": "~6.5.4",
     "tslib": "^1.10.0",
     "zone.js": "~0.10.2"

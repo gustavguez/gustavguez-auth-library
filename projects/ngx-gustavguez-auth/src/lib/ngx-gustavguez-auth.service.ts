@@ -76,6 +76,9 @@ export class NgxGustavguezAuthService {
 	public login(loginUsername: string, loginPassword: string): Observable<boolean> {
 		// Create an observable
 		const obs = new Observable<boolean>((observer: any) => {
+			// Set root strategy
+			this.apiService.changeApiResponseStrategy('root');
+
 			// Request token
 			this.apiService.createObj(this.config.oauthUri, {
 				username: loginUsername,
@@ -91,7 +94,7 @@ export class NgxGustavguezAuthService {
 					}
 
 					// Creates the access token model
-					return this.parseAccessToken(response);
+					return this.parseAccessToken(response.data);
 				})
 			).subscribe((response: NgxGustavguezAccessTokenModel) => {
 				// Load accesstoken
@@ -108,6 +111,9 @@ export class NgxGustavguezAuthService {
 							// Notify user state
 							this.checkAndNotifyMeState();
 
+							// Restore
+							this.apiService.restoreApiResponseStrategy();
+
 							// Load response
 							observer.next(true);
 							observer.complete();
@@ -118,6 +124,9 @@ export class NgxGustavguezAuthService {
 						}
 					);
 				} else {
+					// Restore
+					this.apiService.restoreApiResponseStrategy();
+
 					// Complete subscribe
 					observer.next(true);
 					observer.complete();
@@ -132,6 +141,10 @@ export class NgxGustavguezAuthService {
 
 	// Generate a access token
 	public requestMe(): Observable<NgxGustavguezMeModel> {
+		// Set root strategy
+		this.apiService.changeApiResponseStrategy('data');
+
+		// Do request
 		return this.apiService.fetchData(this.config.oauthMeUri).pipe(
 			map((response: ApiResponseModel) => {
 				// Load userLogged
@@ -150,6 +163,9 @@ export class NgxGustavguezAuthService {
 				// Save to LS
 				this.storageService.set(this.config.lastMeAvatarLsKey, this.me.profileImage);
 				this.storageService.set(this.config.lastMeUsernameLsKey, this.me.username);
+
+				// Restore
+				this.apiService.restoreApiResponseStrategy();
 				return this.me;
 			})
 		);
@@ -158,6 +174,9 @@ export class NgxGustavguezAuthService {
 	public refreshToken(): Observable<NgxGustavguezAccessTokenModel> {
 		// Get refresh token
 		const refreshToken: string = this.accessToken instanceof NgxGustavguezAccessTokenModel ? this.accessToken.refreshToken : '';
+
+		// Set root strategy
+		this.apiService.changeApiResponseStrategy('root');
 
 		// Request token
 		return this.apiService.createObj(this.config.oauthUri, {
@@ -176,11 +195,13 @@ export class NgxGustavguezAuthService {
 				}
 
 				// Creates the access token model
-				this.accessToken = this.parseAccessToken(response);
+				this.accessToken = this.parseAccessToken(response.data);
 
 				// Load to apiService to
 				this.apiService.setAccessToken(this.accessToken.token);
 
+				// Restore
+				this.apiService.restoreApiResponseStrategy();
 				return this.accessToken;
 			})
 		);
@@ -216,6 +237,9 @@ export class NgxGustavguezAuthService {
 				if (this.accessToken instanceof NgxGustavguezAccessTokenModel) {
 					// Has configured me
 					if (this.config.oauthMeUri) {
+						// Load to apiService to
+						this.apiService.setAccessToken(this.accessToken.token);
+
 						// Request me info
 						this.requestMe().subscribe(
 							() => {

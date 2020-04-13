@@ -1,6 +1,10 @@
 <div class="row">
-	<div class="col-12">
+	<div class="col-12" *ngIf="me">
+		<p>Logged in: {{ me.username }} <button (click)="onLogout()">LOGOUT</button></p>
+	</div>
+	<div class="col-12" *ngIf="!me">
 		<ngx-gustavguez-auth-login
+			[imageUrl]="imageUrl"
 			(onError)="onLoginError($event)"
 			(onSuccess)="onLoginSuccess()"></ngx-gustavguez-auth-login>
 	</div>

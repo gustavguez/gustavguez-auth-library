@@ -87,6 +87,9 @@ var NgxGustavguezAuthService = /** @class */ (function () {
     NgxGustavguezAuthService.prototype.getMe = function () {
         return this.me;
     };
+    NgxGustavguezAuthService.prototype.getMeJsonResponse = function () {
+        return this.meJsonResponse;
+    };
     NgxGustavguezAuthService.prototype.isLogged = function () {
         return !!this.me;
     };
@@ -165,6 +168,8 @@ var NgxGustavguezAuthService = /** @class */ (function () {
             // Load userLogged
             _this.me = new NgxGustavguezMeModel();
             _this.me.fromJSON(response.data.me);
+            // Load me response
+            _this.meJsonResponse = response.data;
             // Emit parsed and changed
             _this.onMeParsed.emit(response.data);
             _this.onMeChanged.emit(_this.me);

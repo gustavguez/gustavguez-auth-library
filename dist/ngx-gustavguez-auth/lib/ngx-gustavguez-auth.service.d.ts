@@ -9,6 +9,7 @@ export declare class NgxGustavguezAuthService {
     private storageService;
     private apiService;
     private me;
+    private meJsonResponse;
     private config;
     private lastMe;
     private accessToken;
@@ -20,6 +21,7 @@ export declare class NgxGustavguezAuthService {
     getLastMe(): NgxGustavguezLastMeModel;
     getAccessToken(): NgxGustavguezAccessTokenModel;
     getMe(): NgxGustavguezMeModel;
+    getMeJsonResponse(): any;
     isLogged(): boolean;
     getOnSessionStateChange(): Observable<boolean>;
     getOnMeChanged(): Observable<NgxGustavguezMeModel>;

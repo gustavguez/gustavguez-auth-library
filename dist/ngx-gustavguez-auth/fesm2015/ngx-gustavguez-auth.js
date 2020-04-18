@@ -83,6 +83,9 @@ let NgxGustavguezAuthService = class NgxGustavguezAuthService {
     getMe() {
         return this.me;
     }
+    getMeJsonResponse() {
+        return this.meJsonResponse;
+    }
     isLogged() {
         return !!this.me;
     }
@@ -159,6 +162,8 @@ let NgxGustavguezAuthService = class NgxGustavguezAuthService {
             // Load userLogged
             this.me = new NgxGustavguezMeModel();
             this.me.fromJSON(response.data.me);
+            // Load me response
+            this.meJsonResponse = response.data;
             // Emit parsed and changed
             this.onMeParsed.emit(response.data);
             this.onMeChanged.emit(this.me);

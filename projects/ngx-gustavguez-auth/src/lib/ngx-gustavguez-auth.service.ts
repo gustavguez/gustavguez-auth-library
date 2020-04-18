@@ -17,6 +17,7 @@ export class NgxGustavguezAuthService {
 
 	// Models
 	private me: NgxGustavguezMeModel;
+	private meJsonResponse: any;
 	private config: NgxGustavguezConfigModel;
 	private lastMe: NgxGustavguezLastMeModel;
 	private accessToken: NgxGustavguezAccessTokenModel;
@@ -54,6 +55,10 @@ export class NgxGustavguezAuthService {
 
 	public getMe(): NgxGustavguezMeModel {
 		return this.me;
+	}
+
+	public getMeJsonResponse(): any {
+		return this.meJsonResponse;
 	}
 
 	public isLogged(): boolean {
@@ -150,6 +155,9 @@ export class NgxGustavguezAuthService {
 				// Load userLogged
 				this.me = new NgxGustavguezMeModel();
 				this.me.fromJSON(response.data.me);
+
+				// Load me response
+				this.meJsonResponse = response.data;
 
 				// Emit parsed and changed
 				this.onMeParsed.emit(response.data);
